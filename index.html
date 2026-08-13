@@ -434,6 +434,110 @@ footer{position:relative;z-index:1;padding:1.6rem 0 2rem}
 .foot-card a:hover{color:var(--cyan);text-shadow:0 0 14px rgba(23,187,238,.6)}
 .foot-card .mono{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase}
 
+/* ============ GLITCH — developer credit ============ */
+.glitch{
+  position:relative;display:inline-block;
+  font-weight:800;color:var(--cyan-ice);
+  letter-spacing:.02em;
+}
+.glitch::before,.glitch::after{
+  content:attr(data-text);
+  position:absolute;left:0;top:0;width:100%;
+  opacity:.85;pointer-events:none;
+}
+.glitch::before{
+  color:#FF3DD8;z-index:-1;
+  animation:glitchA 3.2s infinite steps(1);
+}
+.glitch::after{
+  color:#17BBEE;z-index:-2;
+  animation:glitchB 3.2s infinite steps(1);
+}
+.glitch{animation:glitchFlick 3.2s infinite steps(1)}
+/* mostly still, then a fast burst — catches the eye */
+@keyframes glitchA{
+  0%,86%{transform:none;clip-path:inset(0 0 0 0);opacity:0}
+  87%{transform:translate(-3px,-1px);clip-path:inset(10% 0 55% 0);opacity:.9}
+  89%{transform:translate(3px,1px);clip-path:inset(60% 0 8% 0);opacity:.9}
+  91%{transform:translate(-2px,1px);clip-path:inset(30% 0 40% 0);opacity:.9}
+  93%{transform:translate(2px,-1px);clip-path:inset(75% 0 3% 0);opacity:.9}
+  95%,100%{transform:none;clip-path:inset(0 0 0 0);opacity:0}
+}
+@keyframes glitchB{
+  0%,86%{transform:none;clip-path:inset(0 0 0 0);opacity:0}
+  88%{transform:translate(3px,1px);clip-path:inset(48% 0 20% 0);opacity:.9}
+  90%{transform:translate(-3px,-1px);clip-path:inset(5% 0 78% 0);opacity:.9}
+  92%{transform:translate(2px,1px);clip-path:inset(65% 0 12% 0);opacity:.9}
+  94%{transform:translate(-2px,-1px);clip-path:inset(22% 0 52% 0);opacity:.9}
+  95%,100%{transform:none;clip-path:inset(0 0 0 0);opacity:0}
+}
+@keyframes glitchFlick{
+  0%,86%{text-shadow:0 0 12px rgba(23,187,238,.35)}
+  87%{transform:skewX(3deg);text-shadow:2px 0 #FF3DD8,-2px 0 #17BBEE}
+  89%{transform:skewX(-3deg)}
+  91%{transform:translateX(1px)}
+  93%{transform:translateX(-1px);text-shadow:-2px 0 #FF3DD8,2px 0 #17BBEE}
+  95%,100%{transform:none;text-shadow:0 0 14px rgba(23,187,238,.55)}
+}
+/* hover = instant intense glitch */
+.glitch:hover{animation-duration:.5s}
+.glitch:hover::before{animation-duration:.5s}
+.glitch:hover::after{animation-duration:.5s}
+@media (prefers-reduced-motion:reduce){
+  .glitch,.glitch::before,.glitch::after{animation:none}
+  .glitch::before,.glitch::after{display:none}
+}
+
+/* Developed-by glitch typewriter */
+.dev-credit{display:flex;align-items:center;gap:.45rem;white-space:nowrap}
+.dev-glitch{display:inline-flex;align-items:center}
+.dev-name{
+  position:relative;display:inline-block;
+  font-family:var(--mono);font-weight:700;
+  font-size:1.18rem;letter-spacing:.03em;
+  color:var(--cyan-ice);
+  text-shadow:0 0 14px rgba(23,187,238,.55);
+  min-width:1ch;min-height:1.4em;
+}
+.dev-name::before,.dev-name::after{
+  content:attr(data-text);position:absolute;left:0;top:0;width:100%;overflow:hidden;
+  opacity:0;pointer-events:none;
+}
+.dev-name.glitching::before{
+  opacity:.9;color:#FF3D68;z-index:-1;
+  animation:glitchA .32s steps(2,end) infinite;
+}
+.dev-name.glitching::after{
+  opacity:.9;color:#3DFFE0;z-index:-1;
+  animation:glitchB .28s steps(2,end) infinite;
+}
+.dev-name.glitching{animation:glitchShake .3s steps(2,end) infinite}
+@keyframes glitchA{
+  0%{transform:translate(-3px,-2px);clip-path:inset(0 0 62% 0)}
+  50%{transform:translate(3px,1px);clip-path:inset(48% 0 12% 0)}
+  100%{transform:translate(-2px,2px);clip-path:inset(78% 0 0 0)}
+}
+@keyframes glitchB{
+  0%{transform:translate(3px,2px);clip-path:inset(64% 0 0 0)}
+  50%{transform:translate(-3px,-1px);clip-path:inset(8% 0 66% 0)}
+  100%{transform:translate(2px,-2px);clip-path:inset(0 0 74% 0)}
+}
+@keyframes glitchShake{
+  0%{transform:translate(1px,0) skewX(2deg)}
+  50%{transform:translate(-1px,0) skewX(-1deg)}
+  100%{transform:translate(0,0)}
+}
+.dev-caret{
+  width:2px;height:1.15em;margin-left:3px;border-radius:2px;
+  background:var(--cyan);box-shadow:0 0 10px var(--cyan);
+  animation:caretBlink .8s steps(1) infinite;
+}
+@keyframes caretBlink{0%,55%{opacity:1}56%,100%{opacity:0}}
+.foot-card a.dev-glitch:hover .dev-name{color:var(--cyan);text-shadow:0 0 20px rgba(23,187,238,.9)}
+@media (prefers-reduced-motion:reduce){
+  .dev-name.glitching,.dev-name.glitching::before,.dev-name.glitching::after,.dev-caret{animation:none}
+}
+
 /* reveal */
 html.anim .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s ease}
 html.anim .reveal.in{opacity:1;transform:none}
@@ -719,7 +823,7 @@ html.anim .reveal.in{opacity:1;transform:none}
   <div class="wrap">
     <div class="foot-card glass">
       <div>© <span id="year"></span> Jannatul Baki. All rights reserved.</div>
-      <div>Developed by <a href="https://sharifos.web.app/" target="_blank" rel="noopener">Sharifuz Zaman</a></div>
+      <div class="dev-credit">Developed by <a class="dev-glitch" href="https://sharifos.web.app/" target="_blank" rel="noopener"><span class="dev-name" id="devName" data-text=""></span><span class="dev-caret"></span></a></div>
       <div class="mono">Adventure · Creativity · Learning</div>
     </div>
   </div>
@@ -809,6 +913,43 @@ document.getElementById('year').textContent = new Date().getFullYear();
     if (raf) cancelAnimationFrame(raf);
     card.style.transform = 'rotateY(0deg) rotateX(0deg)';
   });
+})();
+
+
+// ---------- Developed-by: typewriter + glitch ----------
+(function(){
+  const el = document.getElementById('devName');
+  if (!el) return;
+  const NAME = 'Sharifuz Zaman';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced){ el.textContent = NAME; el.setAttribute('data-text', NAME); return; }
+  let i = 0, mode = 'type';
+  function setTxt(t){ el.textContent = t; el.setAttribute('data-text', t); }
+  function glitchBurst(ms){
+    el.classList.add('glitching');
+    setTimeout(() => el.classList.remove('glitching'), ms);
+  }
+  function step(){
+    if (mode === 'type'){
+      i++;
+      setTxt(NAME.slice(0, i));
+      if (Math.random() < .18) glitchBurst(90);
+      if (i >= NAME.length){
+        mode = 'hold';
+        glitchBurst(420);
+        setTimeout(() => { glitchBurst(300); }, 1600);
+        setTimeout(() => { mode = 'erase'; step(); }, 3600);
+        return;
+      }
+      setTimeout(step, 110 + Math.random() * 90);
+    } else if (mode === 'erase'){
+      i -= 2;
+      if (i <= 0){ i = 0; setTxt(''); mode = 'type'; setTimeout(step, 500); return; }
+      setTxt(NAME.slice(0, i));
+      setTimeout(step, 34);
+    }
+  }
+  setTimeout(step, 800);
 })();
 
 // ---------- Gentle snowfall background ----------
